@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-top: 32px;
+  position: relative;
 `;
 
 export const Header = styled.header`
@@ -110,7 +111,7 @@ export const InputSearchContainer = styled.div`
     outline: 0;
     padding: 0 16px;
 
-    &:: placeholder {
+    &::placeholder {
       color: ${({ theme }) => theme.colors.gray[200]};
     }
   }
