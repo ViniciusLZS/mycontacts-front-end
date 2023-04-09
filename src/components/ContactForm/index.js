@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { Form, ButtonContainer } from './styled';
 
 import FormGroup from '../FormGroup';
@@ -7,25 +8,70 @@ import Select from '../Select';
 import Button from '../Button';
 
 export default function ContactForm({ buttonLabel }) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [category, setCategory] = useState('');
+  const [errors, setErrors] = useState([]);
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+
+    if (!event.target.value) {
+      setErrors((prevState) => [
+        ...prevState,
+        { field: 'name', message: 'Nome é obrigatório' },
+      ]);
+    } else {
+      setErrors((prevState) => prevState.filter(
+        (error) => error.field !== 'name',
+      ));
+    }
+  }
+
+  console.log(errors);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log({
+      name, email, phone, category,
+    });
+  }
+
   return (
-    <Form>
+    <Form onSubmit={(event) => handleSubmit(event)}>
       <FormGroup>
-        <Input placeholder="Nome" />
-      </FormGroup>
-
-      <FormGroup
-        error="O formato de E-mail é inválido."
-      >
-        <Input placeholder="E-mail" error />
-      </FormGroup>
-
-      <FormGroup>
-        <Input placeholder="Telefone" />
+        <Input
+          placeholder="Nome"
+          value={name}
+          onChange={(event) => handleNameChange(event)}
+        />
       </FormGroup>
 
       <FormGroup>
-        <Select>
+        <Input
+          placeholder="E-mail"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Input
+          placeholder="Telefone"
+          value={phone}
+          onChange={(event) => setPhone(event.target.value)}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Select
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        >
+          <option value="">Categoria</option>
           <option value="instagram">Instagram</option>
+          <option value="discord">Discord</option>
         </Select>
       </FormGroup>
       <ButtonContainer>
