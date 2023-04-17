@@ -1,6 +1,6 @@
 import HttpClient from './utils/HttpClient';
 
-class ContactsServices {
+class ContactsService {
   constructor() {
     this.httpClient = new HttpClient('http://localhost:3001');
   }
@@ -10,4 +10,4 @@ class ContactsServices {
   }
 }
 
-export default new ContactsServices();
+export default new ContactsService();
