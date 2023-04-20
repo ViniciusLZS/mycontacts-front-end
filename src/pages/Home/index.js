@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState, useMemo } from 'react/';
+import {
+  useEffect, useState, useMemo, useCallback,
+} from 'react/';
 
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
@@ -25,7 +27,7 @@ export default function Home() {
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
 
-  async function loadeContacts() {
+  const loadeContacts = useCallback(async () => {
     try {
       setIsLoading(true);
 
@@ -39,10 +41,11 @@ export default function Home() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, [orderBy]);
+
   useEffect(() => {
     loadeContacts();
-  }, [orderBy]);
+  }, [loadeContacts]);
 
   function handleToogleOrderBy() {
     setOrderBy(
