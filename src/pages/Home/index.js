@@ -9,7 +9,9 @@ import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 
 import {
-  Container, Header, ListHeader, Card, InputSearchContainer, ErrorContainer, EmptyListContainer,
+  Container, Header, ListHeader, Card,
+  InputSearchContainer, ErrorContainer, EmptyListContainer,
+  SearchNotFoundContainer,
 } from './styles';
 
 import arrow from '../../assets/images/icons/arrow.svg';
@@ -18,6 +20,7 @@ import trash from '../../assets/images/icons/trash.svg';
 import ContactsService from '../../services/ContactsService';
 import sad from '../../assets/images/icons/sad.svg';
 import emptyBox from '../../assets/images/icons/empty-box.svg';
+import magnifierQuestion from '../../assets/images/icons/magnifier-question.svg';
 
 export default function Home() {
   const [contacts, setContacts] = useState([]);
@@ -118,6 +121,14 @@ export default function Home() {
                 para cadastrar o seu primeiro!
               </p>
             </EmptyListContainer>
+          )}
+
+          {(contacts.length > 0 && filteredContacts.length < 1) && (
+            <SearchNotFoundContainer>
+              <img src={magnifierQuestion} alt="Magnifier question" />
+
+              <span>Nenhum resultado foi encontrado para <strong>{searchTerm}</strong>.</span>
+            </SearchNotFoundContainer>
           )}
 
           {filteredContacts.length > 0 && (
