@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import reactDom from 'react-dom';
-import { Overlay, Container, Footer } from './styled';
+import { Overlay, Container, Footer } from './styles';
 
 import Button from '../Button';
 
