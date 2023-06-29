@@ -1,8 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { toastEventManager } from '../../../utils/toast';
+import useAnimatedList from '../../../hooks/useAnimatedList';
 
 export default function useToastContainer() {
-  const [messages, setMessages] = useState([]);
+  const {
+    items: messages,
+    setItems: setMessages,
+    pendingRemovalItemsIds,
+    handleRemoveItem,
+    handleAnimationEnd,
+  } = useAnimatedList();
 
   useEffect(() => {
     function handleAddToast({ type, text, duration }) {
@@ -19,11 +26,9 @@ export default function useToastContainer() {
     return () => {
       toastEventManager.removeListener('addtoast', handleAddToast);
     };
-  }, []);
+  }, [setMessages]);
 
-  const handleRemoveMessage = useCallback((id) => {
-    setMessages((prevState) => prevState.filter((message) => message.id !== id));
-  }, []);
-
-  return { messages, handleRemoveMessage };
+  return {
+    messages, handleRemoveItem, pendingRemovalItemsIds, handleAnimationEnd,
+  };
 }
