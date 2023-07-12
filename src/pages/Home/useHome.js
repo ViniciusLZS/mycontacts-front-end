@@ -1,6 +1,6 @@
 import {
   useEffect, useState, useMemo, useCallback,
-} from 'react/';
+} from 'react';
 import toast from '../../utils/toast';
 import ContactsService from '../../services/ContactsService';
 
