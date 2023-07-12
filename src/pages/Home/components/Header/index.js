@@ -1,6 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import { StyleSheetManager } from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
+
 import { Container } from './styles';
 
 export default function Header({
@@ -17,15 +21,17 @@ export default function Header({
     );
 
   return (
-    <Container justifyContent={alignment}>
-      {(!hasError && qtyOfContacts > 0) && (
-        <strong>
-          {qtyOfFilteredContacts}
-          {qtyOfFilteredContacts === 1 ? ' Contato' : ' Contatos'}
-        </strong>
-      )}
-      <Link to="/new">Novo contato</Link>
-    </Container>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+      <Container justifyContent={alignment}>
+        {(!hasError && qtyOfContacts > 0) && (
+          <strong>
+            {qtyOfFilteredContacts}
+            {qtyOfFilteredContacts === 1 ? ' Contato' : ' Contatos'}
+          </strong>
+        )}
+        <Link to="/new">Novo contato</Link>
+      </Container>
+    </StyleSheetManager>
   );
 }
 

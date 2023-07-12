@@ -1,4 +1,8 @@
 import PropTypes from 'prop-types';
+
+import { StyleSheetManager } from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
+
 import { StyledButton } from './styles';
 import Spinner from '../Spinner';
 
@@ -6,15 +10,17 @@ export default function Button({
   type, disabled, isLoading, children, danger, onClick,
 }) {
   return (
-    <StyledButton
-      type={type}
-      disabled={disabled || isLoading}
-      danger={danger}
-      onClick={onClick}
-    >
-      {!isLoading && children}
-      {isLoading && <Spinner size={16} />}
-    </StyledButton>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+      <StyledButton
+        type={type}
+        disabled={disabled || isLoading}
+        danger={danger}
+        onClick={onClick}
+      >
+        {!isLoading && children}
+        {isLoading && <Spinner size={16} />}
+      </StyledButton>
+    </StyleSheetManager>
   );
 }
 

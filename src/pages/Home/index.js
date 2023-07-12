@@ -1,9 +1,11 @@
-import Loader from '../../components/Loader';
+import { StyleSheetManager } from 'styled-components';
+import isPropValid from '@emotion/is-prop-valid';
 
 import { Container } from './styles';
 
 import useHome from './useHome';
 
+import Loader from '../../components/Loader';
 import InputSearch from './components/InputSearch';
 import Header from './components/Header';
 import ErrorStatus from './components/ErrorStatus';
@@ -36,48 +38,51 @@ export default function Home() {
   const isSearchEmpty = !hasError && (hasContacts && filteredContacts.length < 1);
 
   return (
-    <Container>
-      <Loader isLoading={isLoading} />
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
 
-      {hasContacts && (
-        <InputSearch
-          value={searchTerm}
-          onChange={handleChangeSearchTerm}
-        />
-      )}
+      <Container>
+        <Loader isLoading={isLoading} />
 
-      <Header
-        hasError={hasError}
-        qtyOfContacts={contacts.length}
-        qtyOfFilteredContacts={filteredContacts.length}
-      />
-
-      {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
-      {isListEmpty && <EmptyList />}
-      {isSearchEmpty && <SearchNotFound searchTerm={searchTerm} />}
-
-      {hasContacts && (
-        <>
-          <ContactsList
-            filteredContacts={filteredContacts}
-            orderBy={orderBy}
-            onToogleOrderBy={handleToogleOrderBy}
-            onDeleteContact={handleDeleteContact}
+        {hasContacts && (
+          <InputSearch
+            value={searchTerm}
+            onChange={handleChangeSearchTerm}
           />
+        )}
 
-          <Modal
-            danger
-            isLoading={isLoadingDelete}
-            visible={isDeleteModalVisible}
-            title={`Tem certeza que deseja remover o contato ”${contactBeingDeleted?.name}”?`}
-            confirmLabel="Deletar"
-            onCancel={handleCloseDeleteModal}
-            onConfirm={handleConfirmDeleteContact}
-          >
-            <p>Esta ação não poderá ser desfeita!</p>
-          </Modal>
-        </>
-      )}
-    </Container>
+        <Header
+          hasError={hasError}
+          qtyOfContacts={contacts.length}
+          qtyOfFilteredContacts={filteredContacts.length}
+        />
+
+        {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}
+        {isListEmpty && <EmptyList />}
+        {isSearchEmpty && <SearchNotFound searchTerm={searchTerm} />}
+
+        {hasContacts && (
+          <>
+            <ContactsList
+              filteredContacts={filteredContacts}
+              orderBy={orderBy}
+              onToogleOrderBy={handleToogleOrderBy}
+              onDeleteContact={handleDeleteContact}
+            />
+
+            <Modal
+              danger
+              isLoading={isLoadingDelete}
+              visible={isDeleteModalVisible}
+              title={`Tem certeza que deseja remover o contato ”${contactBeingDeleted?.name}”?`}
+              confirmLabel="Deletar"
+              onCancel={handleCloseDeleteModal}
+              onConfirm={handleConfirmDeleteContact}
+            >
+              <p>Esta ação não poderá ser desfeita!</p>
+            </Modal>
+          </>
+        )}
+      </Container>
+    </StyleSheetManager>
   );
 }
