@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 
-import { StyleSheetManager } from 'styled-components';
-import isPropValid from '@emotion/is-prop-valid';
-
 import { Overlay } from './styles';
 import Spinner from '../Spinner';
 import ReactPortal from '../ReactPortal';
@@ -16,16 +13,14 @@ export default function Loader({ isLoading }) {
   }
 
   return (
-    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
-      <ReactPortal containerId="loader-root">
-        <Overlay
-          isLeaving={!isLoading}
-          ref={animatedElementRef}
-        >
-          <Spinner size={90} />
-        </Overlay>
-      </ReactPortal>
-    </StyleSheetManager>
+    <ReactPortal containerId="loader-root">
+      <Overlay
+        isLeaving={!isLoading}
+        ref={animatedElementRef}
+      >
+        <Spinner size={90} />
+      </Overlay>
+    </ReactPortal>
   );
 }
 
